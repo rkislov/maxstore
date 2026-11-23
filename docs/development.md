@@ -32,4 +32,4 @@ Go-тесты проверяют шифрование, отказ при пов�
 
 GitHub Actions устанавливает зависимости, собирает CSS, проверяет формат Go, запускает Node и Go-тесты с race detector, vet и сборку. Отдельная задача проверяет Docker build.
 
-Для релиза используйте тег `vX.Y.Z` после успешного CI. Workflow собирает архивы для Linux/macOS amd64/arm64 и Windows amd64, публикует SHA256SUMS и GitHub Release. Перед тегом обновите CHANGELOG и package.json. Сборочные артефакты не содержат DATA_DIR или .env.
+Для релиза используйте тег `vX.Y.Z` после успешного CI. Workflow собирает архивы для Linux/macOS amd64/arm64 , публикует SHA256SUMS и GitHub Release. Перед тегом обновите CHANGELOG и package.json. Сборочные артефакты не содержат DATA_DIR или .env.
