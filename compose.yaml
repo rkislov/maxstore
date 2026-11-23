@@ -1,0 +1,24 @@
+services:
+  maxstore:
+    build: .
+    ports:
+      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:9000:9000"
+    environment:
+      DEFAULT_PROVIDER: ${DEFAULT_PROVIDER:-local}
+      S3_PUBLIC_ENDPOINT: ${S3_PUBLIC_ENDPOINT:-http://127.0.0.1:9000}
+      MAX_OBJECT_SIZE: ${MAX_OBJECT_SIZE:-0}
+      UPLOAD_CONCURRENCY: ${UPLOAD_CONCURRENCY:-4}
+      DOWNLOAD_CONCURRENCY: ${DOWNLOAD_CONCURRENCY:-4}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
+      MAX_BOT_TOKEN: ${MAX_BOT_TOKEN:-}
+      MAX_CHAT_ID: ${MAX_CHAT_ID:-}
+    volumes:
+      - maxstore-data:/data
+    restart: unless-stopped
+volumes:
+  maxstore-data:

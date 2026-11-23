@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base { body { @apply bg-slate-50 text-ink antialiased; } button, input, select { @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2; } button { @apply transition-colors; } }
+@layer components {
+ .btn { @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed; }
+ .primary { @apply btn bg-brand text-white hover:bg-violet-700 shadow-sm; }
+ .secondary { @apply btn border border-slate-200 bg-white text-slate-600 hover:bg-slate-50; }
+ .field { @apply w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm; }
+ .nav { @apply flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm text-slate-400 hover:bg-white/5 hover:text-white; }
+ .nav.active { @apply bg-brand/20 text-violet-200; }
+ .panel { @apply rounded-xl border border-slate-200 bg-white; }
+ .badge { @apply inline-flex items-center gap-1.5 rounded-md bg-slate-100 px-2 py-1 text-xs font-medium text-slate-600; }
+ .stat { @apply panel p-5; }
+}
+dialog::backdrop { background: rgb(15 23 42 / .5); backdrop-filter: blur(3px); }
+.dragging { outline: 2px dashed #6658e8; outline-offset: -8px; background: #f5f3ff; }
+@media (prefers-reduced-motion: no-preference) { .enter { animation: enter .25s ease-out; } @keyframes enter { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } } }
+
+/* Palette is shared by static panels and dynamically rendered transfer rows. */
+html[data-theme="dark"] { color-scheme: dark; }
+html[data-theme="dark"] body { background: #0c1220; color: #e2e8f0; }
+html[data-theme="dark"] .panel, html[data-theme="dark"] header, html[data-theme="dark"] .bg-white, html[data-theme="dark"] .field, html[data-theme="dark"] .secondary, html[data-theme="dark"] dialog { background: #151f30; color: #e2e8f0; border-color: #2a364a; }
+html[data-theme="dark"] #login { background: #0c1220; }
+html[data-theme="dark"] [class*="border-slate-"] { border-color: #2a364a; }
+html[data-theme="dark"] [class*="bg-slate-50"], html[data-theme="dark"] [class*="bg-violet-50"], html[data-theme="dark"] .badge { background: #1e2b43; color: #c4b5fd; }
+html[data-theme="dark"] [class*="text-slate-500"], html[data-theme="dark"] [class*="text-slate-600"] { color: #a5b4ca; }
+html[data-theme="dark"] .secondary:hover, html[data-theme="dark"] tr:hover { background: #24334d; }
+html[data-theme="dark"] .dragging { background: #24334d; }
+progress { border: 0; border-radius: 999px; overflow: hidden; }
+progress::-webkit-progress-bar { background: #e2e8f0; border-radius: 999px; }
+progress::-webkit-progress-value { background: #7c6cf2; border-radius: 999px; }
+html[data-theme="dark"] progress::-webkit-progress-bar { background: #2a364a; }

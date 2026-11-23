@@ -1,0 +1,17 @@
+{
+  "name": "maxstore",
+  "version": "0.1.0",
+  "description": "Encrypted object storage on Telegram and MAX",
+  "scripts": {
+    "build:css": "tailwindcss -c tailwind.config.cjs -i ./web/input.css -o ./web/style.css --minify",
+    "watch:css": "tailwindcss -c tailwind.config.cjs -i ./web/input.css -o ./web/style.css --watch",
+    "test": "node --test web/upload-queue.test.cjs"
+  },
+  "keywords": [],
+  "author": "Кислов Роман Сергеевич",
+  "license": "Apache-2.0",
+  "private": true,
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  }
+}
