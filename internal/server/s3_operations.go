@@ -62,12 +62,12 @@ func s3Failure(w http.ResponseWriter, e error) {
 	s3Error(w, errorStatus(e), code, e.Error())
 }
 func parseCopySource(value string) (string, string, error) {
+	if strings.Contains(value, "?") {
+		return "", "", store.ErrInvalid
+	}
 	decoded, e := url.PathUnescape(value)
 	if e != nil {
 		return "", "", store.ErrInvalid
-	}
-	if strings.Contains(decoded, "?") {
-		return "", "", errors.New("versioned copies are not supported")
 	}
 	parts := strings.SplitN(strings.TrimPrefix(decoded, "/"), "/", 2)
 	if len(parts) != 2 || parts[0] == "" || parts[1] == "" {
@@ -189,12 +189,17 @@ func (s *Server) copyObject(w http.ResponseWriter, r *http.Request, bucket, key 
 		s3Error(w, 400, "EntityTooLarge", "Use multipart copy for objects larger than 5 GiB")
 		return
 	}
+	tagDirective := r.Header.Get("X-Amz-Tagging-Directive")
+	if tagDirective != "" && tagDirective != "COPY" && tagDirective != "REPLACE" {
+		s3Failure(w, store.ErrInvalid)
+		return
+	}
+	if tagDirective != "REPLACE" {
+		opts.Tags = source.Tags
+	}
 	ctype := r.Header.Get("Content-Type")
 	directive := r.Header.Get("X-Amz-Metadata-Directive")
 	if directive == "" || directive == "COPY" {
-		if r.Header.Get("X-Amz-Tagging-Directive") != "REPLACE" {
-			opts.Tags = source.Tags
-		}
 		opts.Metadata = source.Metadata
 		opts.Headers = source.Headers
 		ctype = source.Type

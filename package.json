@@ -1,6 +1,6 @@
 {
   "name": "maxstore",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Encrypted object storage on Telegram and MAX",
   "scripts": {
     "build:css": "tailwindcss -c tailwind.config.cjs -i ./web/input.css -o ./web/style.css --minify",

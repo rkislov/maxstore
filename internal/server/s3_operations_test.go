@@ -88,3 +88,15 @@ func TestS3MultipartCopyRange(t *testing.T) {
 		t.Fatal("multipart copy lost data/metadata")
 	}
 }
+
+func TestCopyEncodedQuestionMarkAndIndependentTags(t *testing.T) {
+	app := testApp(t)
+	h := app.S3()
+	call(t, h, "PUT", "/my-bucket", "", 200)
+	headerCall(t, h, "PUT", "/my-bucket/a%3Fb", "hello", map[string]string{"X-Amz-Tagging": "project=maxstore"}, 200)
+	headerCall(t, h, "PUT", "/my-bucket/copy", "", map[string]string{"X-Amz-Copy-Source": "/my-bucket/a%3Fb", "X-Amz-Metadata-Directive": "REPLACE", "X-Amz-Meta-Owner": "Roman"}, 200)
+	o, e := app.Store.Head("my-bucket", "copy")
+	if e != nil || o.Tags["project"] != "maxstore" || o.Metadata["owner"] != "Roman" {
+		t.Fatalf("independent copy directives failed: %v", e)
+	}
+}
